@@ -1,0 +1,13 @@
+<div
+  class="fixed top-0 left-0 z-30 w-screen h-screen bg-black opacity-75"
+  (click)="onClose()"
+></div>
+<div class="fixed z-50 w-1/4 p-4 bg-white rounded shadow right-2 top-10">
+  <p>
+    {{ message }}
+  </p>
+
+  <div class="text-right">
+    <button class="btn btn-primary" (click)="onClose()">Close</button>
+  </div>
+</div>

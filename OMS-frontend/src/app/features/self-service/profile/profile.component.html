@@ -1,0 +1,208 @@
+<div class="relative w-full h-full">
+  <div class="block h-full px-3 mt-3 lg:grid lg:grid-cols-2 lg:gap-3">
+    <div>
+      <div
+        class="relative flex flex-col w-full min-w-0 mb-4 break-words bg-white rounded shadow-sm dark:bg-darkSecondary dark:text-white"
+      >
+        <div class="relative about_me_title">
+          <h1
+            class="font-[500] md:text-[1rem] text-[.75rem] block py-4 pl-5 leading-normal cursor-pointer"
+          >
+            About Me
+          </h1>
+        </div>
+        <div class="flex flex-wrap justify-between px-8 mt-2">
+          <div class="w-[50%] py-4 flex items-center">
+            <i class="mr-2 text-sm fa-solid fa-network-wired"></i>
+            <p class="md:text-[1rem] text-[.75rem]">
+              {{ profile.user.department.name || "NA" }}
+            </p>
+          </div>
+          <div class="w-[50%] py-4 flex items-center">
+            <i class="mr-2 text-sm fa-solid fa-user-group"></i>
+            <p class="md:text-[1rem] text-[.75rem]">
+              {{ profile.user.designation.name || "NA" }}
+            </p>
+          </div>
+          <div class="w-[50%] py-4 flex items-center">
+            <i class="mr-2 text-sm fa-solid fa-phone"></i>
+            <p class="md:text-[1rem] text-[.75rem]">
+              {{ profile.workPhoneNumber || "NA" }}
+            </p>
+          </div>
+        </div>
+      </div>
+      <div
+        class="relative flex flex-col w-full min-w-0 mt-4 mb-4 break-words bg-white rounded shadow-sm lg:mt-0 dark:bg-darkSecondary dark:text-white"
+      >
+        <div class="relative details_title">
+          <h1
+            class="font-[500] block py-4 pl-5 md:text-[1rem] text-[.75rem]"
+          >
+            Work Information
+          </h1>
+        </div>
+        <ul class="px-8 my-2">
+          <li class="grid w-full grid-cols-2 py-2">
+            <h1
+              class="capitalize font-[500] dark:text-gray-400 md:text-[1rem] text-[.75rem]"
+            >
+              User Name
+            </h1>
+            <p class="md:text-[1rem] text-[.75rem]">
+              {{ profile.user.username || "NA" }}
+            </p>
+          </li>
+          <li class="grid w-full grid-cols-2 py-2">
+            <h1
+              class="capitalize font-[500] dark:text-gray-400 md:text-[1rem] text-[.75rem]"
+            >
+              Department
+            </h1>
+            <p class="md:text-[1rem] text-[.75rem]">
+              {{ profile.user.department.name || "NA" }}
+            </p>
+          </li>
+          <li class="grid w-full grid-cols-2 py-2">
+            <h1
+              class="capitalize font-[500] dark:text-gray-400 md:text-[1rem] text-[.75rem]"
+            >
+              Designation
+            </h1>
+            <p class="md:text-[1rem] text-[.75rem]">
+              {{ profile.user.designation.name || "NA" }}
+            </p>
+          </li>
+          <li class="grid w-full grid-cols-2 py-2">
+            <h1
+              class="capitalize font-[500] dark:text-gray-400 md:text-[1rem] text-[.75rem]"
+            >
+              Work Phone Number
+            </h1>
+            <p class="md:text-[1rem] text-[.75rem]">
+              {{ profile.workPhoneNumber || "NA" }}
+            </p>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="relative flex flex-col w-full min-w-0 break-words">
+      <div
+        class="relative flex flex-col w-full min-w-0 mt-4 mb-4 break-words bg-white rounded shadow-sm lg:mt-0 dark:bg-darkSecondary dark:text-white"
+      >
+        <div class="relative details_title">
+          <h1
+            class="font-[500] block py-4 pl-5 md:text-[1rem] text-[.75rem]"
+          >
+            Basic Information
+          </h1>
+        </div>
+        <ul class="px-8 my-2">
+          <li class="grid w-full grid-cols-2 py-2">
+            <h1
+              class="capitalize font-[500] dark:text-gray-400 md:text-[1rem] text-[.75rem]"
+            >
+              Empolyee Id
+            </h1>
+            <p class="md:text-[1rem] text-[.75rem]">
+              {{ profile.id || "NA" }}
+            </p>
+          </li>
+          <li class="grid w-full grid-cols-2 py-2">
+            <h1
+              class="capitalize font-[500] dark:text-gray-400 md:text-[1rem] text-[.75rem]"
+            >
+              First Name
+            </h1>
+            <p class="md:text-[1rem] text-[.75rem]">
+              {{ profile.firstName || "NA" }}
+            </p>
+          </li>
+          <li class="grid w-full grid-cols-2 py-2">
+            <h1
+              class="capitalize font-[500] dark:text-gray-400 md:text-[1rem] text-[.75rem]"
+            >
+              Last Name
+            </h1>
+            <p class="md:text-[1rem] text-[.75rem]">
+              {{ profile.lastName || "NA" }}
+            </p>
+          </li>
+          <li class="grid w-full grid-cols-2 py-2">
+            <h1
+              class="capitalize font-[500] dark:text-gray-400 md:text-[1rem] text-[.75rem]"
+            >
+              Email
+            </h1>
+            <p class="md:text-[1rem] text-[.75rem]">
+              {{ profile.user.email || "NA" }}
+            </p>
+          </li>
+          <li class="grid w-full grid-cols-2 py-2">
+            <h1
+              class="capitalize font-[500] dark:text-gray-400 md:text-[1rem] text-[.75rem]"
+            >
+              Date Of Birth
+            </h1>
+            <p class="md:text-[1rem] text-[.75rem]">
+              {{ setDateFormat(profile.dateOfBirth) || "NA" }}
+            </p>
+          </li>
+          <li class="grid w-full grid-cols-2 py-2">
+            <h1
+              class="capitalize font-[500] dark:text-gray-400 md:text-[1rem] text-[.75rem]"
+            >
+              Gender
+            </h1>
+            <p class="md:text-[1rem] text-[.75rem]">
+              {{ profile.gender || "NA" }}
+            </p>
+          </li>
+          <li class="grid w-full grid-cols-2 py-2">
+            <h1
+              class="capitalize font-[500] dark:text-gray-400 md:text-[1rem] text-[.75rem]"
+            >
+              Personal Phone Number
+            </h1>
+            <p class="md:text-[1rem] text-[.75rem]">
+              {{ profile.personalPhoneNumber || "NA" }}
+            </p>
+          </li>
+        </ul>
+      </div>
+      <div
+        class="relative flex flex-col w-full min-w-0 mt-4 mb-4 break-words bg-white rounded shadow-sm lg:mt-0 dark:bg-darkSecondary dark:text-white"
+      >
+        <div class="relative details_title">
+          <h1
+            class="font-[500] block py-4 pl-5 md:text-[1rem] text-[.75rem]"
+          >
+            Identity Information
+          </h1>
+        </div>
+        <ul class="px-8 my-2">
+          <li class="grid w-full grid-cols-2 py-2">
+            <h1
+              class="capitalize font-[500] dark:text-gray-400 md:text-[1rem] text-[.75rem]"
+            >
+              Aadhar Card
+            </h1>
+            <p class="md:text-[1rem] text-[.75rem]">
+              {{ profile.aadharCard || "NA" }}
+            </p>
+          </li>
+          <li class="grid w-full grid-cols-2 py-2">
+            <h1
+              class="capitalize font-[500] dark:text-gray-400 md:text-[1rem] text-[.75rem]"
+            >
+              PAN Card
+            </h1>
+            <p class="md:text-[1rem] text-[.75rem]">
+              {{ profile.panCard || "NA" }}
+            </p>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

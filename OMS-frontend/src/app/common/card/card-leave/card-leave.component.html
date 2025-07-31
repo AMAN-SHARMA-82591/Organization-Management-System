@@ -1,0 +1,27 @@
+<div
+  class="container md:w-[210px] h-[230px] mb-2 w-screen bg-white shadow-sm md:mr-5 border-2 dark:bg-darkSecondary dark:border-darkSecondary py-5 px-3 text-center cursor-pointer"
+  (click)="handleModal()"
+>
+  <h1 class="font-bold mb-8 dark:text-white md:text-[1rem] text-[.75rem]">
+    {{ title }}
+  </h1>
+  <i class="{{ icon }} mb-10 text-5xl dark:text-white"></i>
+  <table class="flex justify-center text-black dark:text-white">
+    <tbody>
+      <tr>
+        <td class="md:text-[1rem] text-[0.75rem]">Available:&nbsp;</td>
+        <td class="md:text-[1rem] text-[0.75rem]">
+          {{ data.availableLeaves }}
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<app-dialog-leave
+  [leaveType]="leaveType"
+  [leavesData]="leavesData"
+  [isModalOpen]="isModalOpen"
+  [handleOpenModal]="handleModal"
+  (refetchData)="refetchData.emit()"
+  [data]="{ availableLeaves: data.availableLeaves }"
+/>

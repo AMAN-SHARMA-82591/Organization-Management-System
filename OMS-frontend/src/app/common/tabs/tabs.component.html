@@ -1,0 +1,23 @@
+<div class="flex flex-wrap w-full">
+  <div class="w-full bg-white border-b-2 dark:bg-darkPrimary dark:border-b-darkSecondary border-b-gray-300">
+    <ul
+      *ngFor="let tabMenu of tabsData"
+      class="inline-block mb-0 md:ml-5 ml-0 list-none"
+    >
+      <li
+        routerLinkActive="border-b-2 border-b-primary-600 dark:border-b-darkTextPrimary"
+        class="flex-auto px-3 mr-2 -mb-px last:mr-0 text-blueGray-700 dark:text-white"
+      >
+        <a
+          routerLinkActive="text-red-600 dark:text-darkTextPrimary"
+          [routerLink]="tabMenu.path"
+          [routerLinkActiveOptions]="{ exact: true }"
+          class="block py-3 md:text-xs md:font-medium  font-normal text-[.5rem] leading-normal uppercase cursor-pointer"
+        >
+          {{ tabMenu.name }}
+        </a>
+      </li>
+    </ul>
+  </div>
+  <ng-content></ng-content>
+</div>

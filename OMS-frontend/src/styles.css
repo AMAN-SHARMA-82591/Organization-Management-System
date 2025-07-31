@@ -1,0 +1,53 @@
+/* You can add global styles to this file, and also import other style files */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import "~ngx-toastr/toastr";
+
+body,
+html {
+  font-family: Arial, Helvetica, sans-serif;
+  height: 100%;
+}
+
+.selected-item {
+  max-width: fit-content !important;
+}
+
+.dropdown-btn {
+  @apply w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:border-primary-400 dark:focus:border-darkTextPrimary focus:outline-none placeholder:text-xs !important;
+}
+
+.form_input {
+  @apply w-full px-3 py-2 leading-tight text-gray-700 border border-gray-400 rounded shadow appearance-none dark:bg-darkSecondary dark:border-gray-800 dark:text-white focus:border-sky-800 dark:focus:border-darkTextPrimary focus:outline-none placeholder:text-xs;
+}
+
+.primary_button {
+  @apply px-4 py-2 mr-1 text-xs font-bold text-white uppercase transition-all duration-150 ease-linear bg-red-500 rounded shadow outline-none dark:bg-darkButton active:bg-red-600 hover:shadow-md focus:outline-none;
+}
+
+.primary_button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.secondary_button {
+  @apply px-4 py-2 mr-1 text-xs font-bold text-red-500 uppercase transition-all duration-150 ease-linear bg-transparent border border-red-500 border-solid rounded outline-none dark:bg-darkSecondary dark:border-darkSecondary dark:text-white focus:outline-none;
+}
+
+.auth_button {
+  @apply inline-flex h-[39px] w-[39px] p-2 items-center text-xs font-bold text-gray-700 uppercase transition-all duration-150 ease-linear bg-white rounded shadow outline-none focus:outline-none hover:shadow-md;
+}
+
+.input_label {
+  @apply block mb-2 text-sm font-bold text-gray-700 dark:text-white;
+}
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}

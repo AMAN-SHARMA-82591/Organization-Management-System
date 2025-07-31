@@ -1,0 +1,10 @@
+<app-card-header [totalMembers]="employees.length"></app-card-header>
+<!-- <app-card-details class="px-3"></app-card-details> -->
+<div class="flex flex-grow gap-x-3 px-3 w-full">
+  <div *ngFor="let department of departments" class="w-1/2">
+    <app-card-list
+      [title]="department"
+      [teams_data]="employees"
+    ></app-card-list>
+  </div>
+</div>

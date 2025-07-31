@@ -1,0 +1,114 @@
+<nav
+  [ngClass]="(showSidebar | async) ? 'md:w-56' : 'md:w-28'"
+  class="relative z-0 flex flex-row flex-wrap items-center justify-between px-6 py-4 duration-300 bg-white shadow-sm dark:bg-darkSecondary dark:text-white md:left-0 md:block md:fixed md:top-0 md:bottom-0 md:overflow-y-auto md:flex-row md:flex-nowrap md:overflow-hidden transition-auto"
+>
+  <div
+    class="flex flex-wrap items-center justify-between w-full px-0 mx-auto md:flex-col md:items-stretch md:min-h-full md:flex-nowrap"
+  >
+    <button
+      class="px-3 py-1 text-xl leading-none text-black bg-transparent border border-transparent border-solid rounded opacity-50 cursor-pointer md:hidden"
+      type="button"
+      (click)="toggleCollapseShow('bg-white m-2 py-3 px-6')"
+    >
+      <i class="fas fa-bars"></i>
+    </button>
+
+    <div class="flex items-center justify-between">
+      <a
+        [routerLink]="['/']"
+        class="inline-block p-2 px-0 mr-0 text-sm font-bold text-left uppercase md:block md:pb-2 text-blueGray-600 whitespace-nowrap"
+      >
+        <span class="hidden md:block">OMS</span>
+      </a>
+      <button (click)="toggleSidebar()" class="hidden md:block text-md">
+        <i
+          [ngClass]="
+            (showSidebar | async)
+              ? 'fa-solid fa-angles-left'
+              : 'fa-solid fa-angles-right'
+          "
+        ></i>
+      </button>
+    </div>
+
+    <hr class="my-4 sm:hidden md:min-w-full" />
+
+    <div
+      class="absolute top-0 left-0 right-0 z-40 items-center flex-1 h-auto overflow-x-hidden overflow-y-auto rounded shadow md:flex md:flex-col md:items-stretch md:opacity-100 md:relative md:mt-4 md:shadow-none dark:bg-darkSecondary"
+      [ngClass]="collapseShow"
+    >
+      <div
+        class="block pb-4 mb-4 border-b border-solid md:min-w-full md:hidden border-blueGray-200"
+      >
+        <div class="flex flex-wrap">
+          <div class="w-6/12">
+            <a
+              [routerLink]="['/']"
+              class="inline-block p-4 px-0 mr-0 text-sm font-bold text-left uppercase md:block md:pb-2 text-blueGray-600 whitespace-nowrap"
+            >
+              OMS
+            </a>
+          </div>
+          <div class="flex justify-end w-6/12">
+            <button
+              type="button"
+              class="px-3 py-1 text-xl leading-none text-black bg-transparent border border-transparent border-solid rounded opacity-50 cursor-pointer dark:text-white md:hidden"
+              (click)="toggleCollapseShow('hidden')"
+            >
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <ul class="flex flex-col list-none md:flex-col md:min-w-full">
+        <li
+          class="relative items-center py-1 pl-[5px]"
+          *ngFor="let menu of menuData"
+        >
+          <a
+            routerLinkActive="text-primary-600 hover:text-primary-700 dark:text-darkTextPrimary"
+            [routerLink]="menu.link"
+            (click)="toggleCollapseShow('hidden')"
+            [ngClass]="(showSidebar | async) ? '' : 'md:justify-center'"
+            class="flex items-center py-3 text-xs font-medium uppercase text-blueGray-700 hover:text-blueGray-500"
+            [routerLinkActiveOptions]="menu.matchOption"
+          >
+            <i
+              [ngClass]="
+                (showSidebar | async) ? 'md:text-sm mr-2' : 'md:text-xl'
+              "
+              class="w-4 {{ menu.icon }}"
+            ></i>
+            <p *ngIf="showSidebar | async">
+              {{ menu.title }}
+            </p>
+          </a>
+        </li>
+      </ul>
+      <div
+        [ngClass]="(showSidebar | async) ? '' : 'flex justify-center'"
+        class="relative w-full px-2 text-sm pt-9 md:p-0 md:absolute bottom-5 text-blueGray-700 hover:text-blueGray-500"
+      >
+        <button
+          class="flex items-center text-xs font-bold uppercase"
+          (click)="toggleTheme()"
+        >
+          <i
+            [ngClass]="[
+              themeService.isDark ? 'fa-solid fa-sun' : 'fa-solid fa-moon',
+              (showSidebar | async) ? 'md:text-sm mr-2' : 'md:text-xl'
+            ]"
+            class="mr-2"
+          ></i>
+          <p *ngIf="showSidebar | async">
+            {{ themeService.isDark ? "Light Theme" : "Dark Theme" }}
+          </p>
+        </button>
+      </div>
+    </div>
+    <div class="block md:hidden left-1">
+      <app-profile-menu></app-profile-menu>
+    </div>
+  </div>
+</nav>

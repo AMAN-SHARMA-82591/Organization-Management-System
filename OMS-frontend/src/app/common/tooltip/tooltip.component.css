@@ -1,0 +1,44 @@
+.tooltipTrigger {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.tooltipTrigger .tooltipBox {
+  border-radius: 8px;
+  position: absolute;
+  top: -53px;
+  transform: translateX(-5%);
+  padding: 6px;
+  background-color: #000;
+  color: #fff;
+  font-size: 14px;
+  opacity: 0;
+  transition: opacity 0.3s;
+  width: max-content;
+  margin: 5px;
+  visibility: hidden;
+}
+
+.triangularTip {
+  top: 100%;
+  background-color: #000;
+  z-index: -1;
+  height: 15px;
+  width: 15px;
+  transform: rotate(45deg);
+  margin-top: -11px;
+  position: absolute;
+  box-shadow: #000;
+  border-radius: 2px;
+}
+
+.tooltipTrigger:hover .tooltipBox {
+  opacity: 1;
+  visibility: visible;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

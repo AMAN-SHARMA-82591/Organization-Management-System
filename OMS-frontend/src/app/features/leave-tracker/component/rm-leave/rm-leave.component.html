@@ -1,0 +1,138 @@
+<div class="m-3 pb-16">
+  <table class="min-w-full border-collapse">
+    <tbody>
+      <tr
+        class="flex justify-between flex-wrap mb-5 text-gray-800 bg-white border-b dark:bg-darkSecondary xl:table-row dark:text-white xl:flex-row dark:border-darkPrimary xl:flex-no-wrap xl:mb-0"
+      >
+        <th
+          class="xl:w-auto p-3 text-left block xl:table-cell relative xl:static md:text-[1rem] text-[.75rem]"
+        >
+          Name
+        </th>
+        <th
+          class="xl:w-auto p-3 text-left block xl:table-cell relative xl:static md:text-[1rem] text-[.75rem]"
+        >
+          Date
+        </th>
+        <th
+          class="xl:w-auto p-3 text-left block xl:table-cell relative xl:static md:text-[1rem] text-[.75rem]"
+        >
+          Type Of Leave
+        </th>
+        <th
+          class="xl:w-auto p-3 text-left block xl:table-cell relative xl:static md:text-[1rem] text-[.75rem]"
+        >
+          Reason
+        </th>
+        <th
+          class="xl:w-auto p-3 text-left block xl:table-cell relative xl:static md:text-[1rem] text-[.75rem]"
+        ></th>
+      </tr>
+      <tr
+        *ngFor="let data of rmData"
+        class="flex flex-row flex-wrap mt-5 mb-10 text-gray-800 bg-white border-b dark:bg-darkSecondary xl:table-row dark:text-white xl:flex-row dark:border-darkPrimary xl:flex-no-wrap xl:mb-0"
+      >
+        <td
+          class="w-full xl:w-auto p-3 text-left block xl:table-cell relative xl:static md:text-[1rem] text-[.75rem]"
+        >
+          <i
+            class="fa-regular fa-user mr-4 md:text-md text-[.75rem]"
+            style="color: #176be8"
+          ></i>
+          {{ data.createdBy }}
+        </td>
+        <td
+          class="w-full xl:w-auto p-3 text-left block xl:table-cell relative xl:static md:text-[1rem] text-[.75rem]"
+        >
+          <i
+            class="fa-regular fa-clock mr-4 md:text-md text-[.75rem]"
+            style="color: #176be8"
+          ></i>
+          {{ setDateFormat(data.startDate) }} -
+          {{ setDateFormat(data.endDate) }}
+        </td>
+        <td
+          class="w-full xl:w-auto p-3 text-left block xl:table-cell relative xl:static md:text-[1rem] text-[.75rem]"
+        >
+          <i
+            class="fa-regular fa-calendar-alt mr-4 md:text-md text-[.75rem]"
+            style="color: #176be8"
+          ></i>
+          {{ data.typeOfLeave }}
+        </td>
+        <td
+          class="w-full xl:w-auto p-3 text-left block xl:table-cell relative xl:static md:text-[1rem] text-[.75rem]"
+        >
+          <i
+            class="fa-regular fa-comment-alt mr-4 md:text-md text-[.75rem]"
+            style="color: #176be8"
+          ></i>
+          {{ data.reason }}
+        </td>
+
+        <td class="w-full mb-5 xl:mb-0 flex justify-center">
+          <button
+            *ngIf="!data.isApproved && !data.isCancelled"
+            (click)="handleRejectRequest(data)"
+            class="primary_button"
+          >
+            Reject
+          </button>
+          <button
+            *ngIf="!data.isApproved && !data.isCancelled"
+            (click)="handleApproveRequest(data)"
+            class="primary_button"
+          >
+            Approve
+          </button>
+          <p *ngIf="data.isApproved" class="text-green-600">
+            <i class="fa-solid fa-check mr-1 md:text-md text-[.75rem]"></i>
+            Approved
+          </p>
+          <p *ngIf="data.isCancelled" class="text-green-600">
+            <i class="fa-solid fa-check mr-1 md:text-md text-[.75rem]"></i>
+            Rejected
+          </p>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <h1
+    class="w-full dark:bg-darkSecondary rounded-bl-sm rounded-br-sm dark:text-white text-black bg-white py-3 text-lg text-center"
+    *ngIf="!rmData.length"
+  >
+    No Data Found
+  </h1>
+  <app-dialog-approveLeaveRequest
+    (onSubmit)="onSubmit($event)"
+    [data]="selectedRequest"
+    (handleOpenRMRequest)="handleOpenRMRequest()"
+    [isApproveModalOpen]="isApproveModalOpen"
+  ></app-dialog-approveLeaveRequest>
+  <app-modal *ngIf="isRejectModalOpen.getValue()">
+    <div class="min-h-[100px] flex flex-col justify-between">
+      <textarea
+        [(ngModel)]="leaveReason"
+        cols="5"
+        rows="5"
+        placeholder="Enter Cancellation Reason"
+        [ngModelOptions]="{ standalone: true }"
+        name="leaveReason"
+        class="form_input"
+      ></textarea>
+
+      <div class="flex justify-end mt-2 gap-x-1">
+        <button (click)="handleOpenRejectRequest()" class="secondary_button">
+          Cancel
+        </button>
+        <button
+          [disabled]="leaveReason.length < 10"
+          (click)="rejectLeave()"
+          class="primary_button"
+        >
+          Confirm
+        </button>
+      </div>
+    </div>
+  </app-modal>
+</div>

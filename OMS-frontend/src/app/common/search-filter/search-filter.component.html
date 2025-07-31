@@ -1,0 +1,2 @@
+<input [placeholder]="placeholder" class="form_input" [(ngModel)]="searchText" type="text" name="searchText" id="searchTexts"
+    (ngModelChange)="this.searchTextUpdate.next($event)">

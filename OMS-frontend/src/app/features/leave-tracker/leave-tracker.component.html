@@ -1,0 +1,134 @@
+<div class="relative flex flex-col w-full h-full p-3">
+  <div
+    class="flex items-center justify-between px-5 py-3 mb-3 bg-white border-2 rounded-sm shadow-sm dark:bg-darkSecondary dark:border-darkSecondary"
+  >
+    <h1
+      class="font-bold text-center dark:text-white text-[0.75rem] md:text-[1rem]"
+    >
+      Leave year {{ year }}
+    </h1>
+    <button
+      class="relative primary_button"
+      type="button"
+      (click)="handleModal('')"
+    >
+      Apply Leave
+    </button>
+  </div>
+  <div class="flex flex-wrap justify-center w-full mb-3 md:justify-normal">
+    <app-card-leave
+      title="Paid Leave"
+      leaveType="paid_leave"
+      [leavesData]="leavesData"
+      icon="fa-regular fa-calendar-days"
+      (refetchData)="refreshUserLeavesData()"
+      [data]="{ availableLeaves: leavesData.availablePaidLeaves }"
+    />
+    <app-card-leave
+      title="Unpaid Leave"
+      leaveType="unpaid_leave"
+      [leavesData]="leavesData"
+      icon="fa-regular fa-calendar-days"
+      (refetchData)="refreshUserLeavesData()"
+      [data]="{ availableLeaves: leavesData.availableUnpaidLeaves }"
+    />
+    <app-card-leave
+      title="Vacation Leave"
+      [leavesData]="leavesData"
+      leaveType="vacation_leave"
+      icon="fa-regular fa-calendar-days"
+      (refetchData)="refreshUserLeavesData()"
+      [data]="{ availableLeaves: leavesData.availableVacationLeaves }"
+    />
+    <app-card-leave
+      title="Sick Leave"
+      leaveType="sick_leave"
+      [leavesData]="leavesData"
+      icon="fa-regular fa-calendar-days"
+      (refetchData)="refreshUserLeavesData()"
+      [data]="{ availableLeaves: leavesData.availableSickLeaves }"
+    />
+  </div>
+  <div class="pb-10">
+    <div
+      class="bg-white border-2 mb-20 shadow-sm dark:bg-darkSecondary dark:border-darkSecondary"
+    >
+      <h1
+        class="relative heading md:font-bold font-semibold md:text-xl px-4 py-3 mb-5 align-middle dark:text-white md:text-[1rem] text-[0.75rem]"
+      >
+        All Leave and Holidays
+      </h1>
+      <table class="min-w-full border-collapse">
+        <tbody>
+          <tr
+            *ngFor="let item of upcomingLeaveHolidays"
+            class="flex flex-row flex-wrap mb-10 text-gray-800 bg-white border-b dark:bg-darkSecondary lg:table-row dark:text-white lg:flex-row dark:border-darkPrimary lg:flex-no-wrap lg:mb-0"
+          >
+            <td
+              class="w-full lg:w-auto p-3 text-left block lg:table-cell relative lg:static md:text-[1rem] text-[.75rem]"
+            >
+              <i
+                class="fa-regular fa-calendar-days mr-4 md:text-md text-[.75rem]"
+                style="color: #176be8"
+              ></i>
+              {{ item.date }}
+            </td>
+            <td
+              class="w-full lg:w-auto p-3 text-left block lg:table-cell relative lg:static md:text-[1rem] text-[.75rem]"
+            >
+              <i
+                class="fa-regular fa-calendar-days mr-4 md:text-md text-[.75rem]"
+                style="color: #176be8"
+              ></i>
+              {{ item.reason }}
+            </td>
+
+            <td *ngIf="item.isLeave">
+              <button
+                (click)="handleCancelLeaveModal(item)"
+                class="primary_button"
+              >
+                Cancel Leave
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <app-dialog-leave
+    [data]="{ availableLeaves: 0 }"
+    [leavesData]="leavesData"
+    [leaveType]="leaveType"
+    [isModalOpen]="isModalOpen"
+    [handleOpenModal]="handleModal"
+    (refetchData)="refreshUserLeavesData()"
+  />
+
+  <app-modal *ngIf="isCancelLeaveModalOpen.getValue()">
+    <div class="min-h-[100px] flex flex-col justify-between">
+      <textarea
+        [(ngModel)]="leaveReason"
+        cols="5"
+        rows="5"
+        placeholder="Enter Cancellation Reason"
+        name="leaveReason"
+        [ngModelOptions]="{ standalone: true }"
+        class="form_input"
+      ></textarea>
+
+      <div class="flex justify-end mt-2 gap-x-1">
+        <button (click)="handleCancelLeaveModal()" class="secondary_button">
+          Cancel
+        </button>
+        <button
+          [disabled]="leaveReason.length < 10"
+          (click)="cancelLeave()"
+          class="primary_button"
+        >
+          Confirm
+        </button>
+      </div>
+    </div>
+  </app-modal>
+</div>

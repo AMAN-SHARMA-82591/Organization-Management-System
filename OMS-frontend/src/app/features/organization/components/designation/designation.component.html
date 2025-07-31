@@ -1,0 +1,58 @@
+<div class="flex items-center justify-between w-full p-2">
+  <search-filter placeholder="Search Designation" [handleChange]="onSearchChange">
+
+  </search-filter>
+  <button class="primary_button" type="button" (click)="handleModal()">
+    Create New Designation
+  </button>
+</div>
+
+<app-loader *ngIf="isLoading"></app-loader>
+
+<app-table *ngIf="!isLoading" [onDelete]="onDeleteDesignation" [onEdit]="onEditClick" [columns]="columns"
+  [data]="designations" title="Designations"></app-table>
+
+<app-pagination (pageChange)="onPageChange($event)" [offset]="params.getValue().pageNum"
+  [limit]="params.getValue().pageSize" [size]="totalDesgs" [range]="3"></app-pagination>
+
+<app-modal *ngIf="isModalOpen.getValue()">
+  <h2 class="mb-4 text-xl font-bold text-primary-400">{{editMode ? 'Update Designation' : 'New Designation'}}
+</h2>
+  <div class="w-full max-w-md mx-auto mt-8">
+    <form [formGroup]="designationForm" (ngSubmit)="editMode ? onSaveDesignation() :onSubmit()" class="rounded">
+      <div class="mb-4">
+        <label class="input_label" for="name">Name</label>
+        <input type="text" id="name" formControlName="name" class="form_input" placeholder="e.g. SDE" />
+        <small class="text-red-500" *ngIf="designationForm.controls['name'].touched &&
+                  designationForm.controls['name'].errors?.['required']
+                ">This field is required</small>
+
+        <small class="text-red-500"
+          *ngIf="(designationForm.controls['name'].errors?.['minlength'] || designationForm.controls['name'].errors?.['maxlength'])">Enter
+          department name within 5 to 30 characters</small>
+      </div>
+
+      <div class="mb-4">
+        <label class="input_label" for="description">Description</label>
+        <textarea type="description" id="description" formControlName="description" class="form_input"
+          placeholder="Description" rows="5" style="resize: none;"></textarea>
+        <small class="text-red-500" *ngIf="
+                  designationForm.controls['description'].touched &&
+                  designationForm.controls['description'].errors?.['required']
+                ">This field is required</small>
+        <small class="text-red-500"
+          *ngIf="(designationForm.controls['description'].errors?.['minlength'] || designationForm.controls['description'].errors?.['maxlength'])">Enter
+          department desctiption within 30 to 150 characters</small>
+      </div>
+
+      <div class="flex justify-end gap-2">
+        <button [disabled]="designationForm.invalid" type="submit" class="primary_button">
+          {{editMode ? 'Save' : 'Submit'}}
+        </button>
+        <button (click)="handleModal()" class="secondary_button" type="button">
+          Cancel
+        </button>
+      </div>
+    </form>
+  </div>
+</app-modal>

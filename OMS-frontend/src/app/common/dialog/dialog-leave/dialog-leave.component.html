@@ -1,0 +1,192 @@
+<div
+  *ngIf="isModalOpen.getValue()"
+  class="absolute top-0 left-0 z-50 w-full h-full bg-gray-100 dark:bg-darkPrimary"
+>
+  <form [formGroup]="leaveTrackerForm" (ngSubmit)="onSubmit()">
+    <div
+      class="flex justify-between bg-white dark:bg-darkPrimary py-3 px-5 border-b-2 dark:border-darkSecondary mb-3"
+    >
+      <h3 class="text-lg text-blueGray-700 dark:text-white">Apply Leave</h3>
+      <div class="flex justify-end gap-2">
+        <button
+          type="submit"
+          [disabled]="
+            leaveTrackerForm.invalid || remainingLeaveData.balance < 0
+          "
+          class="primary_button"
+        >
+          Submit
+        </button>
+        <button
+          (click)="handleCancelModel()"
+          class="secondary_button"
+          type="button"
+        >
+          Cancel
+        </button>
+      </div>
+    </div>
+    <div
+      class="block lg:flex p-4 mx-2 h-[500px] overflow-y-auto scrollbar-thumb-rounded scrollbar-track-rounded grow scrollbar-thin scrollbar-thumb-white scrollbar-track-gray-300 dark:scrollbar-thumb-darkPrimary dark:scrollbar-track-darkSecondary bg-white dark:bg-darkPrimary rounded-sm"
+    >
+      <div
+        class="w-full lg:w-[70%] p-0 lg:pr-5 lg:border-r-2 border-0 dark:border-darkSecondary"
+      >
+        <div class="mb-4">
+          <label
+            class="block mb-2 text-sm font-semibold md:text-lg dark:text-white text-gray-700"
+            for="leaveType"
+          >
+            Leave Type
+          </label>
+          <div class="relative">
+            <select
+              name="LeaveType"
+              [(ngModel)]="leaveType"
+              [ngModelOptions]="{ standalone: true }"
+              (change)="handleChangeLeaveType($event)"
+              class="block w-full bg-white dark:bg-darkSecondary border dark:text-white border-gray-300 dark:border-darkSecondary rounded-md py-2 px-4 leading-tight focus:outline-none focus:border-blue-500"
+            >
+              <option value="" hidden selected>Select an option</option>
+              <option value="paid_leave">Paid Leave</option>
+              <option value="unpaid_leave">Unpaid Leave</option>
+              <option value="sick_leave">Sick Leave</option>
+              <option value="vacation_leave">Vacation Leave</option>
+            </select>
+          </div>
+        </div>
+        <div class="mb-4">
+          <label
+            class="block mb-2 text-sm font-semibold md:text-lg dark:text-white text-gray-700"
+            for="date"
+          >
+            Date
+          </label>
+          <div class="flex">
+            <input
+              type="date"
+              id="date"
+              [(ngModel)]="startDateValue"
+              (input)="updateEndDateField()"
+              (change)="updateDateRange()"
+              [ngModelOptions]="{ standalone: true }"
+              class="form_input"
+              [min]="minDate"
+              placeholder="From"
+              required
+            />
+            <input
+              type="date"
+              id="date"
+              [(ngModel)]="endDateValue"
+              (change)="updateDateRange()"
+              [ngModelOptions]="{ standalone: true }"
+              class="form_input"
+              placeholder="To"
+              [min]="minDate"
+              required
+            />
+          </div>
+          <small
+            class="text-red-500"
+            *ngIf="(leaveTrackerForm.controls['startDate'].errors?.['required'])"
+          >
+            Date field is required
+          </small>
+          <div
+            class="border-gray-100 dark:bg-darkPrimary mt-3"
+            *ngIf="startDateValue"
+            formArrayName="leaveBreakups"
+          >
+            <div *ngFor="let leave of getLeaveBreakups.controls; let i = index">
+              <div
+                [formGroupName]="i"
+                class="border border-gray-200 dark:border-darkSecondary p-2 flex justify-between items-center"
+              >
+                <p class="w-32 dark:text-white">{{ dateList[i] }}</p>
+                <select
+                  name="noOfDays"
+                  formControlName="noOfDays"
+                  (change)="handleChangeNoOfDays($event, i)"
+                  class="block w-[200px] dark:bg-darkSecondary dark:text-white dark:border-darkSecondary bg-white border border-gray-300 rounded-md py-2 px-4 leading-tight focus:outline-none focus:border-blue-500"
+                >
+                  <option selected value="1">Full Day</option>
+                  <option value="0.5">Half Day</option>
+                  <option value="0.25">Quarter Day</option>
+                </select>
+                <select
+                  name="timeOfDay"
+                  [ngClass]="
+                    leave.get('noOfDays')?.value === '1'
+                      ? 'pointer-events-none bg-gray-300 dark:bg-gray-700 text-gray-500'
+                      : ''
+                  "
+                  formControlName="timeOfDay"
+                  class="block w-[200px] dark:bg-darkSecondary dark:text-white dark:border-darkSecondary border border-gray-300 rounded-md py-2 px-4 leading-tight focus:outline-none focus:border-blue-500"
+                >
+                  <option
+                    *ngFor="
+                      let option of handleChangeOptions(
+                        leave.get('noOfDays')?.value
+                      )
+                    "
+                    [ngValue]="option.value"
+                  >
+                    {{ option.name }}
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div
+              class="flex justify-between bg-gray-200 dark:bg-darkSecondary dark:text-white p-2"
+            >
+              <p>Total</p>
+              <p>{{ dateList.length }} Day(s)</p>
+            </div>
+          </div>
+        </div>
+        <div class="mb-4">
+          <label
+            class="block mb-2 text-sm font-semibold md:text-lg dark:text-white text-gray-700"
+            for="reason"
+          >
+            Reason for Leave
+          </label>
+          <textarea
+            rows="5"
+            cols="33"
+            formControlName="reason"
+            class="form_input"
+          >
+          </textarea>
+          <small
+            class="text-red-500"
+            *ngIf="(leaveTrackerForm.controls['reason'].errors?.['minlength'])"
+          >
+            Reason should not be more than 10 letters
+          </small>
+        </div>
+      </div>
+      <div
+        class="w-full lg:w-[30%] block p-4 text-black dark:text-white"
+        *ngIf="startDateValue && leaveType"
+      >
+        <h3 class="font-semibold">{{ startDateValue }} Day(s)</h3>
+        <p>Available balance: {{ remainingLeaveData.availableLeaves }}</p>
+        <p>Currently booked: {{ remainingLeaveData.currentlyBooked }}</p>
+        <p [ngClass]="remainingLeaveData.balance < 0 ? 'text-red-400' : ''">
+          Balance after booked leave:
+          {{ remainingLeaveData.balance }}
+        </p>
+        <p
+          *ngIf="remainingLeaveData.balance < 0"
+          [ngClass]="remainingLeaveData.balance < 0 ? 'text-red-400' : ''"
+          class="mt-5"
+        >
+          Note: You have selected multiple leave dates. Please review your
+          selected dates and adjust them accordingly.
+        </p>
+      </div>
+    </div>
+  </form>
+</div>

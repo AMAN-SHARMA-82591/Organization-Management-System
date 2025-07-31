@@ -1,0 +1,270 @@
+<div
+  class="flex h-9 dark:bg-darkSecondary dark:text-white bg-white justify-end items-center"
+>
+  <ul
+    class="flex flext-row content-center mx-7 gap-5 text-sm h-fit justify-center"
+  >
+    <li
+      class="h-fit cursor-pointer font-semibold md:text-[1rem] text-[.75rem]"
+      (click)="handleOpenModal()"
+    >
+      Edit
+    </li>
+  </ul>
+</div>
+
+<div
+  class="absolute top-0 left-0 h-full w-full z-20"
+  [ngClass]="{ hidden: !openModal }"
+>
+  <div id="modal" class="bg-gray-100 dark:bg-darkPrimary h-full w-full">
+    <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+      <div
+        class="flex justify-between bg-white dark:bg-darkPrimary py-3 px-5 border-b-2 mb-3"
+      >
+        <h3 class="text-lg text-blueGray-700 dark:text-white">Edit Profile</h3>
+        <div class="flex justify-end gap-2">
+          <button
+            [disabled]="profileForm.invalid"
+            type="submit"
+            class="primary_button"
+          >
+            Submit
+          </button>
+          <button
+            (click)="handleCloseModal()"
+            class="secondary_button"
+            type="button"
+          >
+            Cancel
+          </button>
+        </div>
+      </div>
+      <div
+        class="h-[700px] overflow-y-scroll px-2 pb-40 scrollbar-thumb-rounded scrollbar-track-rounded grow scrollbar-thin scrollbar-thumb-white scrollbar-track-gray-300 dark:scrollbar-thumb-darkPrimary dark:scrollbar-track-darkSecondary shadow-sm"
+      >
+        <div class="bg-white mb-2 dark:bg-darkPrimary py-3 px-2 border-b-2">
+          <h3 class="block text-lg py-2 mb-2 text-blueGray-700 dark:text-white">
+            Basic Information
+          </h3>
+          <div class="flex flex-wrap">
+            <div class="w-[50%] mb-5 px-3">
+              <label
+                class="input_label font-medium capitalize"
+                htmlFor="firstName"
+              >
+                First Name
+              </label>
+              <input
+                type="text"
+                class="form_input"
+                placeholder="First Name"
+                name="firstName"
+                formControlName="firstName"
+              />
+              <small
+                class="text-red-500"
+                *ngIf="(profileForm.controls['firstName'].errors?.['required'])"
+              >
+                First Name field is required
+              </small>
+            </div>
+            <div class="w-[50%] mb-5 px-3">
+              <label
+                class="input_label font-medium capitalize"
+                htmlFor="lastName"
+              >
+                Last Name
+              </label>
+              <input
+                type="text"
+                class="form_input"
+                placeholder="Last Name"
+                name="lastName"
+                formControlName="lastName"
+              />
+              <small
+                class="text-red-500"
+                *ngIf="(profileForm.controls['lastName'].errors?.['required'])"
+              >
+                Last Name field is required
+              </small>
+            </div>
+            <div class="w-[50%] mb-5 px-3">
+              <label
+                class="input_label font-medium capitalize"
+                htmlFor="username"
+              >
+                User Name
+              </label>
+              <input
+                type="text"
+                class="form_input"
+                placeholder="User Name"
+                name="username"
+                formControlName="username"
+              />
+              <small
+                class="text-red-500"
+                *ngIf="(profileForm.controls['username'].errors?.['required'])"
+              >
+                User Name field is required
+              </small>
+            </div>
+            <div class="w-[50%] mb-5 px-3">
+              <label
+                class="input_label font-medium capitalize"
+                htmlFor="dateOfBirth"
+              >
+                Date Of Birth
+              </label>
+              <input
+                type="date"
+                class="form_input"
+                placeholder="Date Of Birth"
+                name="dateOfBirth"
+                formControlName="dateOfBirth"
+              />
+            </div>
+            <div class="w-[50%] mb-5 px-3">
+              <label
+                class="input_label font-medium capitalize"
+                htmlFor="workPhoneNumber"
+              >
+                Work Phone Number
+              </label>
+              <input
+                type="text"
+                class="form_input"
+                placeholder="Work Phone Number"
+                name="workPhoneNumber"
+                formControlName="workPhoneNumber"
+              />
+              <small
+                class="text-red-500"
+                *ngIf="(profileForm.controls['workPhoneNumber'].errors?.['required'])"
+              >
+                First Name field is required
+              </small>
+              <small
+                class="text-red-500"
+                *ngIf="(profileForm.controls['workPhoneNumber'].errors?.['minLength'])"
+              >
+                Phone Number should be of minimum 10 digits
+              </small>
+            </div>
+            <div class="w-[50%] mb-5 px-3">
+              <label
+                class="input_label font-medium capitalize"
+                htmlFor="gender"
+              >
+                Gender
+              </label>
+              <div class="relative">
+                <select
+                  name="LeaveType"
+                  formControlName="gender"
+                  class="block appearance-none w-full bg-white dark:bg-darkSecondary dark:text-white border border-gray-300 dark:border-darkSecondary rounded-md py-2 px-4 leading-tight focus:outline-none focus:border-blue-500"
+                >
+                  <option value="null" hidden selected>Select an option</option>
+                  <option value="male">Male</option>
+                  <option value="female">Female</option>
+                </select>
+                <span
+                  class="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none"
+                >
+                  <i class="fas fa-chevron-down"></i>
+                </span>
+              </div>
+            </div>
+            <div class="w-[50%] mb-5 px-3">
+              <label
+                class="input_label font-medium capitalize"
+                htmlFor="personalPhoneNumber"
+              >
+                Personal Phone Number
+              </label>
+              <input
+                type="text"
+                class="form_input"
+                placeholder="Personal Phone Number"
+                name="personalPhoneNumber"
+                formControlName="personalPhoneNumber"
+              />
+            </div>
+            <div class="w-[50%] mb-5 px-3">
+              <label
+                class="input_label font-medium capitalize"
+                htmlFor="language"
+              >
+                Language
+              </label>
+              <input
+                type="text"
+                class="form_input"
+                placeholder="Language"
+                name="language"
+                formControlName="language"
+              />
+            </div>
+            <div class="w-[50%] mb-5 px-3">
+              <label class="input_label font-medium capitalize" htmlFor="email">
+                Email
+              </label>
+              <input
+                type="text"
+                class="form_input"
+                placeholder="Email"
+                name="email"
+                formControlName="email"
+              />
+              <small
+                class="text-red-500"
+                *ngIf="(profileForm.controls['email'].errors?.['required'])"
+              >
+                Email field is required
+              </small>
+            </div>
+          </div>
+        </div>
+        <div class="bg-white mb-2 dark:bg-darkPrimary py-3 px-2 border-b-2">
+          <h3 class="block text-lg py-2 mb-2 text-blueGray-700 dark:text-white">
+            Identity Information
+          </h3>
+          <div class="flex flex-wrap">
+            <div class="w-[50%] mb-5 px-3">
+              <label
+                class="input_label font-medium capitalize"
+                htmlFor="panCard"
+              >
+                PAN Number
+              </label>
+              <input
+                type="text"
+                class="form_input"
+                placeholder="PAN Number"
+                name="panCard"
+                formControlName="panCard"
+              />
+            </div>
+            <div class="w-[50%] mb-5 px-3">
+              <label
+                class="input_label font-medium capitalize"
+                htmlFor="aadharCard"
+              >
+                Aadhar Card
+              </label>
+              <input
+                type="text"
+                class="form_input"
+                placeholder="Aadhar Card"
+                name="aadharCard"
+                formControlName="aadharCard"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

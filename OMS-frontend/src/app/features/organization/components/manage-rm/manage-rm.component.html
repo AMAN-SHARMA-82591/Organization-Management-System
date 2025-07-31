@@ -1,0 +1,18 @@
+<i (click)="handleModal()" class="cursor-pointer fas fa-plus"></i>
+
+<app-modal *ngIf="isModalOpen.getValue()">
+    <h3 class="mb-4 text-xl text-primary-400 dark:text-darkTextPrimary">Assign Reporting Manager to
+        {{selectedEmp.firstName}}
+        {{selectedEmp.lastName}}</h3>
+
+    <app-search-select [onSelect]="onUserSelect" [handleChange]="onSearchChange" [options]="users"></app-search-select>
+
+    <div class="flex items-center mt-2">
+        <button (click)="submitRM()" type="button" class="primary_button">
+            Submit
+        </button>
+        <button (click)="handleModal()" class="secondary_button" type="button">
+            Cancel
+        </button>
+    </div>
+</app-modal>

@@ -1,0 +1,49 @@
+<div
+  class="relative flex flex-col w-full min-w-0 text-black break-words bg-white rounded shadow-lg dark:bg-darkSecondary dark:text-white">
+  <div class="px-2 py-1.5 md:px-4 md:py-3 mb-0 border-0 rounded-t">
+    <div class="flex flex-wrap items-center">
+      <div class="relative flex-1 flex-grow w-full max-w-full px-4">
+        <h3 class="md:text-lg text-blueGray-700 dark:text-white text-[.75rem]">
+          {{ title }}
+        </h3>
+      </div>
+    </div>
+  </div>
+  <div class="block w-full overflow-x-auto">
+    <p *ngIf="!data.length" class="mb-3 text-xl text-center">No Records to Display</p>
+    <table *ngIf="data.length" class="items-center w-full bg-transparent border-collapse">
+      <thead>
+        <tr>
+          <th *ngFor="let col of columns"
+            class="md:px-3 md:py-3 md:text-xs text-left px-2 py-1 text-[.5rem] font-medium uppercase align-middle border border-l-0 border-r-0 border-solid dark:border-darkPrimary bg-blueGray-50 text-blueGray-500 dark:bg-darkSecondary dark:text-white whitespace-nowrap">
+            {{ col.title }}
+          </th>
+          <th
+            class="md:px-6 md:py-3 md:text-xs px-2 py-1  text-[.5rem] font-medium text-left uppercase align-middle border border-l-0 border-r-0 border-solid dark:border-darkPrimary bg-blueGray-50 text-blueGray-500 dark:bg-darkSecondary dark:text-white whitespace-nowrap">
+            Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of data">
+          <td
+            class="max-w-xs p-4 px-3 text-xs whitespace-pre-wrap align-middle border-t-0 border-l-0 border-r-0 text-15"
+            *ngFor="let column of columns"
+            [innerHTML]="column.renderFn? column.renderFn(item[column.key]) : item[column.key] || 'NA'">
+          </td>
+          <td
+            class="relative inline-grid items-center max-w-xs grid-cols-3 gap-2 p-4 px-6 text-xs whitespace-pre-wrap align-middle border-t-0 border-l-0 border-r-0 text-15">
+            <app-tooltip *ngIf="onEdit" tooltipText="Edit">
+              <i (click)="onEdit(item)" class="cursor-pointer fas fa-edit"></i>
+            </app-tooltip>
+            <app-tooltip *ngIf="onDelete" tooltipText="Delete">
+              <app-delete [id]="item.id" [onConfirm]="onDelete"></app-delete>
+            </app-tooltip>
+            <app-tooltip *ngIf="title === 'Employees'" tooltipText="Manage Reporting Manager">
+              <app-manage-rm [selectedEmp]="item"></app-manage-rm>
+            </app-tooltip>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

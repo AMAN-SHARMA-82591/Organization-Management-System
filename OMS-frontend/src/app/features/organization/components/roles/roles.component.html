@@ -1,0 +1,50 @@
+<div class="flex items-center justify-between w-full p-2">
+  <search-filter placeholder="Search Role" [handleChange]="onSearchChange"></search-filter>
+  <button class="primary_button" type="button" (click)="handleModal()">
+    Create New Role
+  </button>
+</div>
+
+<app-loader *ngIf="isLoading"></app-loader>
+<app-table *ngIf="!isLoading" [onDelete]="onDeleteRole" [onEdit]="onEditClick" [columns]="columns" [data]="roles"
+  title="Roles"></app-table>
+
+<app-pagination (pageChange)="onPageChange($event)" [offset]="params.getValue().pageNum"
+  [limit]="params.getValue().pageSize" [size]="totalRoles" [range]="3"></app-pagination>
+
+<app-modal *ngIf="isModalOpen.getValue()">
+  <h2 class="mb-4 text-xl font-bold text-primary-400">{{editMode ? 'Update Role' : 'New Role'}}</h2>
+  <div class="w-full max-w-md mx-auto mt-8">
+    <form [formGroup]="roleForm" (ngSubmit)="editMode ? onSaveRole() : onSubmit()" class="rounded">
+      <div class="mb-4">
+        <label class="input_label" for="name">Name</label>
+        <input type="text" id="name" formControlName="name" class="form_input" placeholder="e.g. Admin" />
+        <small class="text-red-500" *ngIf="roleForm.controls['name'].touched &&
+                  roleForm.controls['name'].errors?.['required']
+                ">This field is required</small>
+        <small class="text-red-500"
+          *ngIf="(roleForm.controls['name'].errors?.['minlength'] || roleForm.controls['name'].errors?.['maxlength'])">Enter
+          name within 5 to 15 characters</small>
+      </div>
+
+      <div class="mb-4">
+        <label class="input_label" for="features">Feature</label>
+        <ng-multiselect-dropdown id="features" [settings]="settings" [data]="features" formControlName="features">
+        </ng-multiselect-dropdown>
+        <small class="text-red-500" *ngIf="
+                  roleForm.controls['features'].touched &&
+                  roleForm.controls['features'].errors?.['required']
+                ">This field is required</small>
+      </div>
+
+      <div class="flex justify-end gap-2">
+        <button [disabled]="roleForm.invalid" type="submit" class="primary_button">
+          {{editMode ? 'Save' : 'Submit'}}
+        </button>
+        <button (click)="handleModal()" class="secondary_button" type="button">
+          Cancel
+        </button>
+      </div>
+    </form>
+  </div>
+</app-modal>

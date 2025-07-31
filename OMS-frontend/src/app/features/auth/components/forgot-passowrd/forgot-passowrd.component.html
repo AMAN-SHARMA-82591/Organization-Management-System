@@ -1,0 +1,31 @@
+<app-modal *ngIf="isOpenModal">
+    <div class="min-h-[100px] flex flex-col justify-between text-black dark:text-white">
+        <p class="text-xl">Are you sure you want to reset your password?</p>
+        <br />
+        <p class="text-sm text-gray-700 dark:text-gray-300">
+            On click of confirm you will receive an email on the provide email id below with reset link to proceed
+            with further steps.
+        </p>
+
+        <form [formGroup]="resetPasswordForm" (ngSubmit)="handleConfirm()">
+            <input class="my-2 form_input" placeholder="Enter your registered email" type="email"
+                formControlName="email" name="email" />
+            <small class="text-red-500" *ngIf="
+                              resetPasswordForm.controls['email'].touched &&
+                              resetPasswordForm.controls['email'].errors?.['required']
+                            ">This field is required</small>
+            <small class="text-red-500" *ngIf="
+                                            resetPasswordForm.controls['email'].touched &&
+                                            resetPasswordForm.controls['email'].errors?.['email']
+                                          ">Enter valid email.</small>
+            <div class="flex justify-end gap-x-1">
+                <button class="secondary_button" (click)="handleModal()">Cancel</button>
+                <button class="primary_button" type="submit" [disabled]="resetPasswordForm.invalid || isLoading">Confirm</button>
+            </div>
+        </form>
+    </div>
+</app-modal>
+
+<span (click)="handleModal()" *ngIf="isLoginMode" class="cursor-pointer text-blueGray-200 dark:text-white">
+    <small>Forgot password?</small>
+</span>

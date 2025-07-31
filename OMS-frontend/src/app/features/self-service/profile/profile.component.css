@@ -1,0 +1,17 @@
+.about_me_title::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  background-color: red;
+  width: 2px;
+  height: 100%;
+}
+
+.details_title::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  background-color: red;
+  width: 2px;
+  height: 100%;
+}

@@ -1,0 +1,29 @@
+<div
+  class="w-full dark:bg-darkSecondary bg-white min-w-0 break-words rounded shadow-sm mb-8"
+>
+  <div
+    class="team_title relative px-3 flex flex-row justify-between items-center"
+  >
+    <h3 class="text-lg font-medium block py-2 dark:text-white">{{ title }}</h3>
+    <div class="w-8 h-6 bg-gray-400 text-white text-sm rounded-sm text-center">
+      {{ getLength() }}
+    </div>
+  </div>
+  <ul class="w-full p-3">
+    <li
+      *ngFor="let item of teams_data; let i = index"
+      class="border-b border-blueGray-200"
+    >
+      <div class="flex flext-row w-full p-2 items-center">
+        <div class="flex flext-row w-full items-center">
+          <img class="rounded-full w-8 h8" src="{{ item.image }}" alt="" />
+          <div class="flex flext-row px-2 items-center">
+            <span class="text-gray-400">{{ item.EmployeeID }}-</span>
+            <h3 class="text-md font-medium dark:text-white ml-2">{{ item.name }}</h3>
+          </div>
+        </div>
+        <p class="px-4 text-sm text-green-400">{{ item.status }}</p>
+      </div>
+    </li>
+  </ul>
+</div>

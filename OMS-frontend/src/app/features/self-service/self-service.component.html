@@ -1,0 +1,8 @@
+<div class="h-full relative" [ngClass]="isModalOpen ? 'overflow-y-hidden' : ''">
+  <app-tabs [tabsData]="tabsData" />
+  <app-card-profile></app-card-profile>
+  <app-card-optionbar (isModalOpen)="handleModal($event)"></app-card-optionbar>
+  <router-outlet />
+</div>
+
+<!-- <app-modal-form *ngIf="isModalOpen"></app-modal-form> -->

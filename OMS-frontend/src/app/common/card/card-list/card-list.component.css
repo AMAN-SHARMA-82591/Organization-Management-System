@@ -1,0 +1,8 @@
+.team_title::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    background-color: red;
+    width: 2px;
+    height: 100%;
+}

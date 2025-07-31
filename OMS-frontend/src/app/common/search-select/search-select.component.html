@@ -1,0 +1,10 @@
+<div class="search-select">
+    <input (click)="handleShowDropdown()" class="form_input" type="text" [(ngModel)]="searchText"
+        (ngModelChange)="this.searchTextUpdate.next($event)" placeholder="Search...">
+    <div class="mt-1">
+        <ul class="py-2 bg-white max-h-[200px] overflow-auto" *ngIf="options.length > 0 && showDropDown">
+            <li class="p-2 text-black border-gray-400 cursor-pointer hover:bg-gray-500 hover:text-white"
+                *ngFor="let option of options" (click)="onUserClick(option)">{{ option.key }}</li>
+        </ul>
+    </div>
+</div>

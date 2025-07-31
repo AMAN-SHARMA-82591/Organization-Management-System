@@ -1,0 +1,24 @@
+<div [ngClass]="{ dark: this.themeService.isDark }">
+  <div class="h-screen overflow-hidden bg-gray-100 dark:bg-darkPrimary">
+    <app-sidebar *ngIf="isLoggedIn"></app-sidebar>
+    <div
+      [ngClass]="
+        !isLoggedIn
+          ? ''
+          : (menuService.showSidebar | async)
+          ? 'md:ml-56'
+          : 'md:ml-28'
+      "
+      class="h-full md:duration-300 transition-auto"
+    >
+      <app-navbar *ngIf="isLoggedIn"></app-navbar>
+      <!-- <app-header-stats></app-header-stats> -->
+      <div
+        class="w-full h-full overflow-y-scroll mx-auto scrollbar-thumb-rounded scrollbar-track-rounded grow scrollbar-thin scrollbar-thumb-white scrollbar-track-gray-300 dark:scrollbar-thumb-darkPrimary dark:scrollbar-track-darkSecondary"
+      >
+        <router-outlet></router-outlet>
+        <!-- <app-footer-admin></app-footer-admin> -->
+      </div>
+    </div>
+  </div>
+</div>

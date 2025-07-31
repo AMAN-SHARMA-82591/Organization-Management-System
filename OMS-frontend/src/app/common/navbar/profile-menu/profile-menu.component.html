@@ -1,0 +1,43 @@
+<div clickOutside (clickOutside)="isMenuOpen = false" class="relative">
+  <button (click)="toggleMenu($event)" class="relative flex text-sm bg-gray-800 rounded-full" type="button"
+    aria-expanded="false" aria-haspopup="true">
+    <img class="rounded-full h-9 w-9" src='https://cdn-icons-png.flaticon.com/512/3135/3135715.png' alt="" />
+  </button>
+
+  <div [ngClass]="
+      isMenuOpen
+        ? 'pointer-events-auto scale-100 animate-fade-in-up opacity-100 duration-200'
+        : 'pointer-events-none scale-95 opacity-0 duration-100 ease-in'
+    "
+    class="absolute right-0 z-50 py-4 mt-2 transition origin-top-right transform bg-white border-2 rounded-md shadow-md w-60 focus:outline-none dark:bg-darkSecondary dark:text-white">
+    <div class="flex items-center px-4 pb-2 border-b border-solid flext-row dark:border-cyan-800 dark:text-white">
+      <div class="w-10 rounded-full shrink-0">
+        <img class="rounded-full" src='https://cdn-icons-png.flaticon.com/512/3135/3135715.png' alt="" />
+      </div>
+      <div class="px-2 overflow-hidden text-sm font-semibold text-ellipsis text-blueGray-700">
+        {{ userName }}
+        <!-- <p
+          class="text-xs font-semibold truncate text-ellipsis text-blueGray-700"
+        >
+          {{ user?.email }}
+        </p> -->
+      </div>
+    </div>
+
+    <ul class="my-2">
+      <li (click)="handlePassword()"
+        class="block px-3 py-2 text-sm font-[400] cursor-pointer hover:bg-gray-100 dark:hover:bg-cyan-800 text-blueGray-700 hover:text-blueGray-500">
+        <i class="mr-1 fa fa-key" aria-hidden="true"></i>
+        Change Password
+      </li>
+
+      <li
+        class="block px-3 py-2 text-sm font-[400] cursor-pointer hover:bg-gray-100 dark:hover:bg-cyan-800 text-blueGray-700 hover:text-blueGray-500"
+        (click)="handleLogout()">
+        <i class="mr-1 fa fa-sign-out" aria-hidden="true"></i>
+        Log Out
+      </li>
+
+    </ul>
+  </div>
+</div>

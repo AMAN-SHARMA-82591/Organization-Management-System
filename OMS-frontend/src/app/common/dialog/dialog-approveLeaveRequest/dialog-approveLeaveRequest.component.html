@@ -1,0 +1,89 @@
+<app-modal *ngIf="isApproveModalOpen.getValue()">
+  <form [formGroup]="rmFormData" (ngSubmit)="onLeaveSubmit()">
+    <div>
+      <div class="mb-4">
+        <label
+          class="block mb-2 text-sm font-semibold md:text-lg dark:text-white text-gray-700"
+          for="mail"
+        >
+          Comment
+        </label>
+        <textarea
+          rows="4"
+          cols="33"
+          formControlName="comment"
+          class="form_input resize-none"
+        >
+        </textarea>
+        <small
+          class="text-red-500"
+          *ngIf="(rmFormData.controls['comment'].errors?.['minlength'])"
+        >
+          Reason should not be more than 10 letters
+        </small>
+      </div>
+      <div class="mb-4">
+        <label
+          class="block mb-2 text-sm font-semibold md:text-lg dark:text-white text-gray-700"
+          for="mail"
+        >
+          From {{ setDateFormat(data.startDate) }} to
+          {{ setDateFormat(data.endDate) }}
+        </label>
+      </div>
+      <div class="mb-4">
+        <table
+          class="table-auto w-full text-black dark:text-white"
+          formArrayName="approvedLeaveBreakups"
+        >
+          <tbody>
+            <tr class="bg-primary-500 dark:bg-darkSecondary">
+              <th class="px-4 py-2 text-left text-white">Date</th>
+              <th class="px-4 py-2 text-center text-white">Time</th>
+              <th class="px-4 py-2 text-center text-white">Approve</th>
+            </tr>
+          </tbody>
+          <tbody
+            class="border border-gray-400 dark:border-darkSecondary w-full"
+            *ngFor="
+              let leave of getApprovedLeaveBreakups.controls;
+              let i = index
+            "
+          >
+            <tr [formGroupName]="i">
+              <td class="px-4 py-2 text-left">
+                {{ setDateFormat(leaveBreakups[i].startDate) }}
+              </td>
+              <td class="px-4 py-2 text-center">
+                {{ leaveBreakups[i].timeOfDay }}
+              </td>
+              <td class="px-4 py-2 text-center">
+                <input
+                  type="checkbox"
+                  name="isApproved"
+                  formControlName="isApproved"
+                  class="form-checkbox h-5 w-5 text-indigo-500 align-middle"
+                />
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="flex justify-end gap-x-1">
+      <button
+        class="secondary_button"
+        (click)="handleOpenRMRequest && handleOpenRMRequest.emit()"
+      >
+        Cancel
+      </button>
+      <button
+        type="Submit"
+        class="primary_button"
+        [disabled]="rmFormData.invalid"
+      >
+        Submit
+      </button>
+    </div>
+  </form>
+</app-modal>
