@@ -2,11 +2,10 @@
   "name": "oms-backend",
   "version": "1.0.0",
   "main": "index.js",
-  "type": "module",
   "scripts": {
-    "build": "tsc",
-    "start": "npx tsc && nodemon dist/index.js",
-    "dev": "nodemon --watch tsc",
+    "build": "tsc && node dist/index.js",
+    "start": "nodemon",
+    "dev": "npx tsc --watch",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -23,9 +22,12 @@
     "multer": "^2.0.2"
   },
   "devDependencies": {
+    "@types/cors": "^2.8.19",
     "@types/express": "^5.0.3",
+    "@types/mongoose": "^5.11.96",
     "@types/node": "^24.1.0",
     "nodemon": "^3.1.10",
-    "ts-node": "^10.9.2"
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
   }
 }

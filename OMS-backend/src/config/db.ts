@@ -7,7 +7,7 @@ export async function connectDB() {
       throw new Error("MONGO_DB_URL environment variable is not defined");
     }
     await mongoose.connect(mongoUrl);
-    console.log(`Connected to MongoDB (db: ${mongoUrl.split("/").pop()})`);
+    console.log(`Connected to MongoDB`);
   } catch (error) {
     console.log(error);
     console.log("Could Not Connect to the Database");
