@@ -53,7 +53,11 @@ const routes: Routes = [
         canMatch: [RouteGuard],
         component: DesignationComponent,
       },
-      { path: 'roles', canMatch: [RouteGuard], component: RolesComponent },
+      {
+        path: 'roles',
+        canMatch: [RouteGuard],
+        component: RolesComponent,
+      },
       {
         path: 'users',
         canMatch: [RouteGuard],
