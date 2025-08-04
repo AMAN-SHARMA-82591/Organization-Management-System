@@ -232,7 +232,7 @@
       <div class="border-b-[1px] dark:border-darkPrimary p-2">
         <span>ID:</span>{{ " " }}
         <span class="font-[500]">{{
-          dashboardDetails?.leaveReport.user.id
+          dashboardDetails?.leaveReport.user._id
         }}</span>
       </div>
       <div class="border-b-[1px] dark:border-darkPrimary p-2">
@@ -245,14 +245,14 @@
       <div class="border-b-[1px] dark:border-darkPrimary p-2">
         <span>Designation:</span>{{ " " }}
         <span class="font-[500]">{{
-          dashboardDetails?.leaveReport.user.designation.name
+          dashboardDetails?.leaveReport?.user?.designation?.name
         }}</span>
       </div>
 
       <div class="last:border-none border-b-[1px] dark:border-darkPrimary p-2">
         <span>Department:</span> {{ " " }}
         <span class="font-[500]">{{
-          dashboardDetails?.leaveReport.user.department.name
+          dashboardDetails?.leaveReport?.user?.department?.name
         }}</span>
       </div>
     </div>
