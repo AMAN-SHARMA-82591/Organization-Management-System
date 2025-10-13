@@ -19,8 +19,8 @@ export class AppComponent implements OnInit, OnDestroy {
     public themeService: ThemeService,
     public menuService: MenuService,
     private authService: AuthService,
-    private profileService: ProfileService,
-    private http: HttpClient
+    // private profileService: ProfileService,
+    // private http: HttpClient
   ) {}
 
   ngOnInit() {
@@ -32,7 +32,7 @@ export class AppComponent implements OnInit, OnDestroy {
         currentUser &&
         this.isLoggedIn &&
         userOrg &&
-        JSON.parse(userOrg).orgId !== null
+        JSON.parse(userOrg).organization !== null
       ) {
         this.authService.getUserData(currentUser);
       }

@@ -7,12 +7,14 @@ import {
   throwError,
   Subscription,
 } from 'rxjs';
+import { jwtDecode } from 'jwt-decode';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { User } from './user.model';
 import { MsalService } from '@azure/msal-angular';
 import { ProfileService } from '../self-service/profile/profile.service';
 import { SocialAuthService } from '@abacritt/angularx-social-login';
+import { ToastrService } from 'ngx-toastr';
 
 export interface AuthResponseData {
   is_success: boolean;
@@ -40,6 +42,16 @@ export interface AuthResponseData {
   };
 }
 
+export interface UserInterface {
+  _id: string;
+  username: string;
+  organization: number | null;
+  designation: number | null;
+  role: string;
+  iat: number;
+  exp: number;
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -48,6 +60,7 @@ export class AuthService implements OnDestroy {
     private http: HttpClient,
     private router: Router,
     private msalService: MsalService,
+    private toastService: ToastrService,
     public profileService: ProfileService,
     private socialAuthService: SocialAuthService
   ) {}
@@ -107,15 +120,20 @@ export class AuthService implements OnDestroy {
 
   login(email: string, password: string) {
     return this.http
-      .post<any>(environment.baseUrl + '/signIn', {
+      .post<any>(environment.baseUrl + '/auth/login', {
         email,
         password,
       })
       .pipe(
         catchError(this.handleError),
-        tap((res) =>
-          this.handleAuthentication({ ...res.user, roles: res.roles })
-        )
+        tap((res) => {
+          console.log('authresp', res);
+          if (!res.token) {
+            this.toastService.error('Error', 'Failed');
+          }
+          const user: UserInterface = jwtDecode(res.token);
+          this.handleAuthentication({ ...user, _token: res.token });
+        })
       );
   }
 
@@ -134,7 +152,7 @@ export class AuthService implements OnDestroy {
 
   oAuthLogin(accessToken: string, oauthClient: string) {
     return this.http
-      .post<any>(environment.baseUrl + '/oauth/signIn', {
+      .post<any>(environment.baseUrl + '/login', {
         accessToken,
         oauthClient,
       })
@@ -184,15 +202,18 @@ export class AuthService implements OnDestroy {
 
   private handleAuthentication(luser: any) {
     const user = new User(
-      luser.email,
-      luser.id,
+      luser._id,
+      // luser.exp,
+      // luser.iat,
+      luser.role,
+      luser._token,
       luser.username,
-      luser.orgId,
-      luser.token
+      luser.designation,
+      luser.organization
     );
     this.user.next(user);
     localStorage.setItem('user', JSON.stringify(user));
-    if (user.orgId) {
+    if (user.organization) {
       this.subscription = this.profileService.getUserProfile().subscribe({
         next: (profileData: any) => {
           localStorage.setItem(

@@ -27,7 +27,8 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.getDashboardDetails();
     if (user) {
       const profileData = JSON.parse(user);
-      if (!profileData.orgId) {
+      // if (!profileData.orgId) {
+      if (profileData.orgId) {
         this.isModalOpen.next(true);
       } else {
         this.currentUser = profileData;

@@ -20,8 +20,10 @@ export class OrganizationComponent implements OnInit {
   ngOnInit(): void {
     const access = this.authService.getUserAccesses();
 
-    console.log(access);
-    
+    // console.log(access);
+
+    // const access = ['department', 'designation', 'roles', 'users'];
+
     this.tabsData = this.tabsData.filter(({ key }) => access.includes(key));
   }
 }

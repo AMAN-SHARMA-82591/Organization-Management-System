@@ -14,11 +14,11 @@ export class ProfileComponent implements OnInit, OnDestroy {
   constructor(public profileService: ProfileService) {}
 
   ngOnInit(): void {
-    this.subscription = this.profileService.userProfile$.subscribe(
-      (profileData) => {
-        this.profile = profileData.users_profile_info;
-      }
-    );
+    // this.subscription = this.profileService.userProfile$.subscribe(
+    //   (profileData) => {
+    //     this.profile = profileData.users_profile_info;
+    //   }
+    // );
   }
 
   setDateFormat(currentDate: Date) {
